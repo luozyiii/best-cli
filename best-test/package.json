@@ -2,7 +2,7 @@
   "name": "@leslie0403/best-test",
   "version": "1.0.0",
   "bin": {
-    "best-test": "bin/index.js"
+    "best-test": "./bin/index.js"
   },
   "main": "index.js",
   "license": "MIT",
