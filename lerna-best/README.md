@@ -43,6 +43,16 @@ lerna version
 lerna changed
 // 查看 diff
 lerna diff
-// 项目发布
+// 项目发布 后，git会打包生成tag
 lerna publish
+```
+
+#### 发布注意事项：
+
+```javascript
+// package.json 添加
+"publishConfig": {
+  "access": "public"
+}
+// 添加 LICENSE.md
 ```
