@@ -29,5 +29,8 @@
   "dependencies": {
     "@lerna-best/utils": "^1.0.1"
   },
-  "gitHead": "c3bbb9fdb80941a2ac3d203944f208f84e00d811"
+  "gitHead": "c3bbb9fdb80941a2ac3d203944f208f84e00d811",
+  "publishConfig": {
+    "access": "public"
+  }
 }

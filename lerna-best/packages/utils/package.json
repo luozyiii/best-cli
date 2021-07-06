@@ -25,5 +25,8 @@
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
