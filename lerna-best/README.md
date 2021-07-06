@@ -37,5 +37,12 @@ lerna exec --scope @lerna-best/utils  rm -rf node_modules/ // 指定package
 lerna run test
 lerna run --scope @lerna-best/utils test // 指定package
 
-
+// 版本
+lerna version
+// 查看上版本以来所有的变更
+lerna changed
+// 查看 diff
+lerna diff
+// 项目发布
+lerna publish
 ```
