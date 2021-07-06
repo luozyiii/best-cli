@@ -1,6 +1,6 @@
 {
   "name": "@lerna-best/utils",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "脚手架工具库",
   "keywords": [
     "utils"
