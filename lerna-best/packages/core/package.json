@@ -1,6 +1,6 @@
 {
   "name": "@lerna-best/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "core",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
@@ -24,6 +24,6 @@
     "url": "https://github.com/luozyiii/best-cli/issues"
   },
   "dependencies": {
-    "@lerna-best/utils": "^1.0.0"
+    "@lerna-best/utils": "^1.0.1"
   }
 }

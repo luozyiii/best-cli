@@ -1,6 +1,6 @@
 {
   "name": "@lerna-best/utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "脚手架工具库",
   "keywords": [
     "utils"
@@ -25,6 +25,5 @@
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
-  },
-  "dependencies": {}
+  }
 }
