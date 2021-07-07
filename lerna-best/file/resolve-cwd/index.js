@@ -1,10 +1,10 @@
 const resolveCwd = require('resolve-cwd');
 
 console.log(__dirname);
-//=> 'D:\my\best-cli\lerna-best\file\resolve-cwd'
+//=> /Users/luozhiyi/Work/project/best-cli/lerna-best/file/resolve-cwd
 
 console.log(process.cwd());
-//=> 'D:\my\best-cli\lerna-best'
+//=> /Users/luozhiyi/Work/project/best-cli/lerna-best
 
 console.log(resolveCwd('./file/resolve-cwd/index.js'));
 //=> 'D:\my\best-cli\lerna-best\file\resolve-cwd\index.js'

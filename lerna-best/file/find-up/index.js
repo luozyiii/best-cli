@@ -3,10 +3,10 @@ const findUp = require('find-up');
 
 (async () => {
   console.log(await findUp('package.json'));
-  //=> '/Users/sindresorhus/package.json'
+  //=> '/Users/luozhiyi/Work/project/best-cli/lerna-best/package.json'
 
   console.log(await findUp(['rainbow.png', 'package.json']));
-  //=> '/Users/sindresorhus/package.json'
+  //=> '/Users/luozhiyi/Work/project/best-cli/lerna-best/package.json'
 
   console.log(
     await findUp(
@@ -17,5 +17,5 @@ const findUp = require('find-up');
       { type: 'directory' },
     ),
   );
-  //=> '/Users/sindresorhus'
+  //=> '/Users/luozhiyi/Work/project/best-cli/lerna-best'
 })();

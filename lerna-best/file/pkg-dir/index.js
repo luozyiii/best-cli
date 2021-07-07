@@ -1,4 +1,3 @@
-const path = require('path');
 const pkgDir = require('pkg-dir');
 
 (async () => {
@@ -8,5 +7,5 @@ const pkgDir = require('pkg-dir');
 
   // 获取package.json 的上级目录
   console.log(rootDir);
-  //=> 'D:\my\best-cli\lerna-best'
+  //=> /Users/luozhiyi/Work/project/best-cli/lerna-best
 })();
