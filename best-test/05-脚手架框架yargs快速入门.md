@@ -1,3 +1,20 @@
+##
+
+### yargs 安装
+
+```javascript
+yarn add -D yargs
+```
+
+### dedent
+
+```javascript
+yarn add -D dedent
+```
+
+### 基本用法
+
+```javascript
 #!/usr/bin/env node
 
 const yargs = require('yargs/yargs');
@@ -33,3 +50,4 @@ cli
   }) // 定义命令
   .group(['debug'], 'Dev Options') // 将命令分组
   .strict().argv;
+```

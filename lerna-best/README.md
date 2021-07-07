@@ -58,3 +58,18 @@ lerna publish
 ```
 
 ##### 注： 在 vscode 中，执行命令后左侧目录不会马上刷新，请手动点击项目上方的刷新按钮
+
+### npm 项目本地依赖引用方法(重点)
+
+```javascript
+// packages/core/package.json
+"dependencies": {
+  "@lerna-best/utils": "file:../utils"
+},
+// 进入 packages/core 重新npm install
+cd packages/core
+npm install
+
+// 执行 bin/index.js
+node packages/core/bin/index.js
+```

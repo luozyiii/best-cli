@@ -27,7 +27,7 @@
     "url": "https://github.com/luozyiii/best-cli/issues"
   },
   "dependencies": {
-    "@lerna-best/utils": "^1.0.3"
+    "@lerna-best/utils": "file:../utils"
   },
   "gitHead": "c3bbb9fdb80941a2ac3d203944f208f84e00d811",
   "publishConfig": {
