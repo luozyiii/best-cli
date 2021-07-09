@@ -49,7 +49,7 @@
 
 - npmlog
 - fs-extra
-- semver
+- semver 版本号比对
 - colors
 - user-home
 - dotenv

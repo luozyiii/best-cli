@@ -1,5 +1,5 @@
 {
-  "name": "@best-cli/cli",
+  "name": "@best-cli/core",
   "version": "1.0.0",
   "description": "> TODO: description",
   "author": "luozyiii <924361501@qq.com>",
@@ -10,7 +10,15 @@
     "best": "./bin/index.js"
   },
   "dependencies": {
-    "@best-cli/utils": "file:../../utils/utils"
+    "@best-cli/log": "file:../../utils/log",
+    "@best-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "colors": "^1.4.0",
+    "import-local": "^3.0.2",
+    "npmlog": "^4.1.2",
+    "path-exists": "^4.0.0",
+    "root-check": "^2.0.0",
+    "semver": "^7.3.5",
+    "user-home": "^3.0.0"
   },
   "directories": {
     "lib": "lib",
@@ -30,8 +38,8 @@
     "url": "https://github.com/luozyiii/best-cli/issues"
   },
   "devDependencies": {
-    "import-local": "^3.0.2",
-    "npmlog": "^4.1.2"
+    "dotenv": "^10.0.0",
+    "minimist": "^1.2.5"
   },
   "publishConfig": {
     "access": "public"
