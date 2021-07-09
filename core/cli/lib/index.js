@@ -34,7 +34,7 @@ function core() {
   }
 }
 
-function checkGlobalUpdate() {
+async function checkGlobalUpdate() {
   /**
    * 1、获取当前版本号和模块名
    * 2、调用npm api,获取所有版本号
@@ -43,8 +43,14 @@ function checkGlobalUpdate() {
    */
   const curVersion = pkg.version;
   const npmName = pkg.name;
-  const { getNpmInfo } = require('@best-cli/get-npm-info');
-  getNpmInfo(npmName);
+  const { getNpmSemverVersion } = require('@best-cli/get-npm-info');
+  const lastVersion = await getNpmSemverVersion(curVersion, npmName);
+  if (lastVersion && semver.gt(lastVersion, curVersion)) {
+    log.warn(
+      colors.yellow(`更新提示：请手动更新${npmName},当前版本：${curVersion},最新版本:${lastVersion}
+    更新命令：npm install -g ${npmName}`),
+    );
+  }
 }
 
 // 环境变量检查
