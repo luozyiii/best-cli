@@ -47,8 +47,9 @@ async function checkGlobalUpdate() {
   const lastVersion = await getNpmSemverVersion(curVersion, npmName);
   if (lastVersion && semver.gt(lastVersion, curVersion)) {
     log.warn(
-      colors.yellow(`更新提示：请手动更新${npmName},当前版本：${curVersion},最新版本:${lastVersion}
-    更新命令：npm install -g ${npmName}`),
+      colors.yellow(`更新提示: 请手动更新
+      当前版本: v${curVersion}, 最新版本:v${lastVersion}
+      更新命令: npm install -g ${npmName}`),
     );
   }
 }
@@ -63,7 +64,7 @@ const checkEnv = async () => {
     });
   }
   createDefaultConfig();
-  log.verbose('环境变量', process.env.CLI_HOME_PATH);
+  log.verbose('环境变量(process.env.CLI_HOME_PATH)', process.env.CLI_HOME_PATH);
 };
 
 function createDefaultConfig() {
@@ -122,6 +123,6 @@ function checkNodeVersion() {
 
 // 检查版本号
 function checkPkgVersion() {
-  log.info(pkg.version);
+  log.info(`v${pkg.version}`);
   // log.success('success test');
 }
