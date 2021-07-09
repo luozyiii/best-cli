@@ -1,7 +1,7 @@
 {
   "name": "@best-cli/core",
   "version": "1.0.8",
-  "description": "> TODO: description",
+  "description": "前端脚手架",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
   "license": "ISC",

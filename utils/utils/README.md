@@ -1,8 +1,8 @@
 # `utils`
 
-> TODO: description
+> 工具函数
 
-## Usage
+## 使用
 
 ```
 const utils = require('utils');

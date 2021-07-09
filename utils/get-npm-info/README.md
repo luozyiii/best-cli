@@ -1,11 +1,10 @@
 # `get-npm-info`
 
-> TODO: description
+> 获取 npm 包信息
 
-## Usage
+## 使用
 
-```
-const getNpmInfo = require('get-npm-info');
-
-// TODO: DEMONSTRATE API
+```javascript
+// 获取最新版本号
+const { getNpmSemverVersion } = require('get-npm-info');
 ```

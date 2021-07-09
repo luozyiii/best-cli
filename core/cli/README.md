@@ -1,11 +1,13 @@
-# `cli`
+# `前端脚手架(best)`
 
-> TODO: description
+> 前端自动化
 
-## Usage
+## 使用
 
-```
-const cli = require('cli');
+```javascript
+// 安装
+npm install -g @best-cli/core
 
-// TODO: DEMONSTRATE API
+// 简单命令
+best
 ```
