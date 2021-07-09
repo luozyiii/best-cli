@@ -1,6 +1,6 @@
 {
   "name": "@best-cli/get-npm-info",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "get npm info",
   "keywords": [
     "npm"

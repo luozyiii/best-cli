@@ -1,6 +1,6 @@
 {
   "name": "@best-cli/core",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "> TODO: description",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
@@ -10,8 +10,8 @@
     "best": "./bin/index.js"
   },
   "dependencies": {
-    "@best-cli/log": "file:../../utils/log",
     "@best-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "@best-cli/log": "file:../../utils/log",
     "colors": "^1.4.0",
     "import-local": "^3.0.2",
     "npmlog": "^4.1.2",
