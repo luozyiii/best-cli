@@ -1,10 +1,7 @@
 {
-  "name": "@best-cli/init",
+  "name": "@best-cli/exec",
   "version": "1.0.0",
-  "description": "best-cli init",
-  "keywords": [
-    "init"
-  ],
+  "description": "best-cli execute package",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
   "license": "ISC",
@@ -25,6 +22,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@best-cli/package": "file:../../models/package"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"

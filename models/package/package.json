@@ -1,10 +1,7 @@
 {
-  "name": "@best-cli/init",
+  "name": "@best-cli/package",
   "version": "1.0.0",
-  "description": "best-cli init",
-  "keywords": [
-    "init"
-  ],
+  "description": "best-cli npm modules",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
   "license": "ISC",

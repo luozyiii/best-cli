@@ -20,21 +20,27 @@ const log = require('@best-cli/log');
 const pkg = require('../package.json');
 const constant = require('./const');
 const init = require('@best-cli/init');
+const exec = require('@best-cli/exec');
 
 const program = new commander.Command();
-function core() {
+async function core() {
   try {
-    checkPkgVersion();
-    checkNodeVersion();
-    // checkRoot();
-    checkUserHome();
-    // checkInputArgs();
-    // checkEnv();
-    checkGlobalUpdate();
+    await prepare();
     registerCommand();
   } catch (e) {
     log.error(e.message);
   }
+}
+
+// 脚手架启动阶段
+async function prepare() {
+  checkPkgVersion();
+  checkNodeVersion();
+  // checkRoot();
+  checkUserHome();
+  // checkInputArgs();
+  await checkEnv();
+  checkGlobalUpdate();
 }
 
 // 注册命令
@@ -43,9 +49,10 @@ function registerCommand() {
     .name(Object.keys(pkg.bin)[0])
     .usage('<command> [options]')
     .version(pkg.version)
-    .option('-d, --debug', '是否开启调试模式', false);
+    .option('-d, --debug', '是否开启调试模式', false)
+    .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
 
-  program.command('init [projectName]').option('-f, --force', '是否强制初始化项目').action(init);
+  program.command('init [projectName]').option('-f, --force', '是否强制初始化项目').action(exec);
 
   // 开启 debug 模式
   program.on('option:debug', function () {
@@ -58,6 +65,11 @@ function registerCommand() {
   });
 
   log.verbose('debug', 'test debug log'); // 开启debug模式后可打印这句
+
+  // 指定targetPath
+  program.on('option:targetPath', function () {
+    process.env.CLI_TARGET_PATH = program.opts().targetPath;
+  });
 
   // 对未知命令的监听
   program.on('command:*', function (obj) {
@@ -98,6 +110,7 @@ async function checkGlobalUpdate() {
 
 // 环境变量检查
 const checkEnv = async () => {
+  console.log('checkEnv');
   const dotenv = require('dotenv');
   const dotenvPath = path.resolve(userHome, '.env');
   if (await pathExists(dotenvPath)) {
@@ -106,7 +119,7 @@ const checkEnv = async () => {
     });
   }
   createDefaultConfig();
-  log.verbose('环境变量(process.env.CLI_HOME_PATH)', process.env.CLI_HOME_PATH);
+  // log.verbose('环境变量(process.env.CLI_HOME_PATH)', process.env.CLI_HOME_PATH);
 };
 
 function createDefaultConfig() {
