@@ -110,7 +110,6 @@ async function checkGlobalUpdate() {
 
 // 环境变量检查
 const checkEnv = async () => {
-  console.log('checkEnv');
   const dotenv = require('dotenv');
   const dotenvPath = path.resolve(userHome, '.env');
   if (await pathExists(dotenvPath)) {

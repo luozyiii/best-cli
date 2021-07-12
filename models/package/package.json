@@ -23,6 +23,9 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
+  "dependencies": {
+    "@best-cli/utils": "file:../../utils/utils"
+  },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
   }
