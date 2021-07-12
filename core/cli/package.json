@@ -12,13 +12,15 @@
   "dependencies": {
     "@best-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@best-cli/log": "file:../../utils/log",
+    "@best-cli/init": "file:../../commands/init",
     "colors": "^1.4.0",
     "import-local": "^3.0.2",
     "npmlog": "^4.1.2",
     "path-exists": "^4.0.0",
     "root-check": "^2.0.0",
     "semver": "^7.3.5",
-    "user-home": "^3.0.0"
+    "user-home": "^3.0.0",
+    "commander": "^8.0.0"
   },
   "directories": {
     "lib": "lib",

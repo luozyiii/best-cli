@@ -19,6 +19,7 @@ const log = require('@best-cli/log');
 
 const pkg = require('../package.json');
 const constant = require('./const');
+const init = require('@best-cli/init');
 
 const program = new commander.Command();
 function core() {
@@ -44,6 +45,8 @@ function registerCommand() {
     .version(pkg.version)
     .option('-d, --debug', '是否开启调试模式', false);
 
+  program.command('init [projectName]').option('-f, --force', '是否强制初始化项目').action(init);
+
   // 开启 debug 模式
   program.on('option:debug', function () {
     if (program.opts().debug) {
@@ -51,8 +54,9 @@ function registerCommand() {
     } else {
       process.env.LOG_LEVEL = 'info';
     }
+    log.level = process.env.LOG_LEVEL;
   });
-  log.level = process.env.LOG_LEVEL;
+
   log.verbose('debug', 'test debug log'); // 开启debug模式后可打印这句
 
   // 对未知命令的监听
