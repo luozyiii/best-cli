@@ -7,7 +7,7 @@ yarn-error.log
 yarn.lock
 coverage
 lerna-debug.log
-/best-test/package-lock.json
+package-lock.json
 
 # misc
 .DS_Store
