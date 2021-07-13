@@ -1,6 +1,6 @@
 {
   "name": "@best-cli/exec",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "description": "best-cli execute package",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
@@ -24,8 +24,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@best-cli/package": "file:../../models/package",
-    "@best-cli/log": "file:../../utils/log"
+    "@best-cli/log": "file:../../utils/log",
+    "@best-cli/package": "file:../../models/package"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
