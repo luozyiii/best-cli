@@ -1,8 +1,8 @@
 {
-  "name": "@best-cli/package",
+  "name": "@best-cli/format-path",
   "version": "1.0.0",
-  "description": "best-cli npm modules",
-  "author": "luozyiii <924361501@qq.com>",
+  "description": "format-path",
+  "author": "罗智毅 <zhiyiluo@drgou.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
   "license": "ISC",
   "main": "lib/index.js",
@@ -22,11 +22,6 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
-    "@best-cli/utils": "file:../../utils/utils",
-    "@best-cli/format-path": "file:../../utils/format-path",
-    "pkg-dir": "^5.0.0"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"

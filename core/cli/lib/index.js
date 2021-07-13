@@ -12,15 +12,14 @@ module.exports = core;
 const path = require('path');
 const semver = require('semver');
 const colors = require('colors/safe');
-const userHome = require('user-home');
+const userHome = require('user-home'); // 该依赖包要废弃
 const pathExists = require('path-exists');
 const commander = require('commander');
 const log = require('@best-cli/log');
+const exec = require('@best-cli/exec');
 
 const pkg = require('../package.json');
 const constant = require('./const');
-const init = require('@best-cli/init');
-const exec = require('@best-cli/exec');
 
 const program = new commander.Command();
 async function core() {
@@ -156,7 +155,7 @@ const checkUserHome = async () => {
   }
 };
 
-// root 账号启动检查和自动降级 window 报错
+// root 账号启动检查和自动降级 报错
 function checkRoot() {
   const rootCheck = require('root-check');
   rootCheck();
