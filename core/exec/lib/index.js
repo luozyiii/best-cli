@@ -1,5 +1,7 @@
 'use strict';
 
+const path = require('path');
+
 const Package = require('@best-cli/package');
 const log = require('@best-cli/log');
 
@@ -8,7 +10,9 @@ const SETTINGS = {
   init: '@best-cli/init',
 };
 
-function exec() {
+const CACHE_DIR = 'dependencies';
+
+async function exec() {
   /**
    * 1、targetPath -> modulePath
    * 2、modulePath -> Package(npm模块)
@@ -16,12 +20,12 @@ function exec() {
    * 4、Package.update / Package.install
    * 封装 -> 复用
    */
-  const targetPath = process.env.CLI_TARGET_PATH;
-  const homePath = process.env.CLI_HOME_PATH;
+  let targetPath = process.env.CLI_TARGET_PATH;
+  let homePath = process.env.CLI_HOME_PATH;
+  let storeDir = '';
+  let pkg;
   log.verbose('targetPath', targetPath);
   log.verbose('homePath', homePath);
-  // best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug
-  // best init --targetPath /d/my/best-cli/commands/init --debug
 
   const cmdObj = arguments[arguments.length - 1];
   const cmdName = cmdObj.name();
@@ -29,15 +33,40 @@ function exec() {
   const packageVersion = 'latest';
 
   if (!targetPath) {
-    targetPath = ''; // 生成缓存路径
+    targetPath = path.resolve(homePath, CACHE_DIR); // 生成缓存路径
+    storeDir = path.resolve(targetPath, 'node_modules');
+    log.verbose('targetPathEnd', targetPath);
+    log.verbose('homePathEnd', homePath);
+
+    pkg = new Package({
+      targetPath,
+      storeDir,
+      packageName,
+      packageVersion,
+    });
+
+    if (pkg.exists()) {
+      // 更新package
+      pkg.update();
+    } else {
+      // 安装package
+      await pkg.install();
+    }
+  } else {
+    pkg = new Package({
+      targetPath,
+      packageName,
+      packageVersion,
+    });
+  }
+  const rootFile = pkg.getRootFilePath();
+  if (rootFile) {
+    require(rootFile).apply(null, arguments);
   }
 
-  const pkg = new Package({
-    targetPath,
-    packageName,
-    packageVersion,
-  });
-  console.log(pkg.getRootFilePath());
+  // best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug
+  // best init --targetPath /d/my/best-cli/commands/init --debug
+  // best init test-project --force --debug
 }
 
 module.exports = exec;

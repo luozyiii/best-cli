@@ -24,11 +24,15 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@best-cli/utils": "file:../../utils/utils",
     "@best-cli/format-path": "file:../../utils/format-path",
+    "@best-cli/get-npm-info": "file:../../utils/get-npm-info",
+    "@best-cli/utils": "file:../../utils/utils",
     "pkg-dir": "^5.0.0"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
+  },
+  "devDependencies": {
+    "npminstall": "^4.11.0"
   }
 }
