@@ -35,8 +35,7 @@
 - 命令注册
 - 命令执行
 
-![命令执行流程](./assets/images/02.png)
-![命令执行流程](./assets/images/03.png)
+![命令执行流程](./assets/images/命令执行流程图.png)
 
 ### 涉及知识点
 
