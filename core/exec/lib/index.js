@@ -45,7 +45,7 @@ async function exec() {
       packageVersion,
     });
 
-    if (pkg.exists()) {
+    if (await pkg.exists()) {
       // 更新package
       pkg.update();
     } else {
@@ -65,7 +65,7 @@ async function exec() {
   }
 
   // best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug
-  // best init --targetPath /d/my/best-cli/commands/init --debug
+  // best init --targetPath /d/my/best-cli/commands/init --debug --force
   // best init test-project --force --debug
 }
 
