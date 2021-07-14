@@ -27,7 +27,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@best-cli/command": "file:../../models/command"
+    "@best-cli/command": "file:../../models/command",
+    "@best-cli/log": "file:../../utils/log"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"

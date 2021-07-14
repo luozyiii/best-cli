@@ -29,6 +29,9 @@
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
   },
+  "dependencies": {
+    "@best-cli/log": "file:../../utils/log"
+  },
   "devDependencies": {
     "colors": "^1.4.0",
     "semver": "^7.3.5"
