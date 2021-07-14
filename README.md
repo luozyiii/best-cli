@@ -15,9 +15,8 @@
 
 ```javascript
 // 本地
-best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug
-best init --targetPath /d/my/best-cli/commands/init --debug --force
-
+best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init test-project --debug --force
+best init --targetPath /d/my/best-cli/commands/init test-project --debug --force
 // 缓存
 best init test-project --force --debug
 ```
