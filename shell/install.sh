@@ -23,7 +23,7 @@ cd models/command/
 yarn
 cd ../../
 
-安装 models/package 依赖
+# 安装 models/package 依赖
 cd models/package/
 yarn
 cd ../../
