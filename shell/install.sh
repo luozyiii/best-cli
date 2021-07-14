@@ -41,5 +41,5 @@ cd ../../
 # 安装 core/cli 依赖
 cd core/cli/
 yarn
-cd ../../
+yarn link
 
