@@ -4,9 +4,20 @@
 
 ### 首先阅读[learn-cli](https://github.com/luozyiii/learn-cli)
 
-### utils
+### 常用命令
+
+- best -h
+
+  > 查看帮助
+
+- best init
+  > 项目初始化
 
 ```javascript
-// utils/log 安装依赖npmlog
-lerna add npmlog utils/log/
+// 本地
+best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug
+best init --targetPath /d/my/best-cli/commands/init --debug --force
+
+// 缓存
+best init test-project --force --debug
 ```

@@ -61,12 +61,10 @@ async function exec() {
   }
   const rootFile = pkg.getRootFilePath();
   if (rootFile) {
-    require(rootFile).apply(null, arguments);
+    // 在当前进程中调用，需要优化成在子进程调用
+    require(rootFile).call(null, Array.from(arguments));
+    // 在node子进程中调用
   }
-
-  // best init --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug
-  // best init --targetPath /d/my/best-cli/commands/init --debug --force
-  // best init test-project --force --debug
 }
 
 module.exports = exec;

@@ -37,7 +37,6 @@ async function core() {
 // 脚手架启动阶段
 async function prepare() {
   checkPkgVersion();
-  checkNodeVersion();
   // checkRoot();
   checkUserHome();
   // checkInputArgs();
@@ -163,18 +162,6 @@ function checkRoot() {
   const rootCheck = require('root-check');
   rootCheck();
   console.log(process.geteuid());
-}
-
-function checkNodeVersion() {
-  /**
-   * 1、获取当前Node版本号
-   * 2、对比最低版本号
-   */
-  const curVersion = process.version;
-  const lowestVersion = constant.LOWEST_NODE_VERSION;
-  if (!semver.gte(curVersion, lowestVersion)) {
-    throw new Error(colors.red(`best-cli 需要安装 v${lowestVersion} 以上版本的 Node.js`));
-  }
 }
 
 // 检查版本号

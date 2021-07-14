@@ -1,11 +1,11 @@
 {
-  "name": "@best-cli/init",
-  "version": "1.0.9",
-  "description": "best-cli init",
+  "name": "@best-cli/command",
+  "version": "1.0.0",
+  "description": "best-cli command",
   "keywords": [
-    "init"
+    "command"
   ],
-  "author": "luozyiii <924361501@qq.com>",
+  "author": "罗智毅 <zhiyiluo@drgou.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
   "license": "ISC",
   "main": "lib/index.js",
@@ -26,10 +26,11 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "dependencies": {
-    "@best-cli/command": "file:../../models/command"
-  },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
+  },
+  "devDependencies": {
+    "colors": "^1.4.0",
+    "semver": "^7.3.5"
   }
 }
