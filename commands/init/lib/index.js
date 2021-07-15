@@ -1,7 +1,15 @@
 'use strict';
 
+const fs = require('fs');
+const fse = require('fs-extra');
+const inquirer = require('inquirer');
+const semver = require('semver');
+
 const Command = require('@best-cli/command');
 const log = require('@best-cli/log');
+
+const TYPE_PROJECT = 'project';
+const TYPE_COMPONENT = 'component';
 
 class InitCommand extends Command {
   init() {
@@ -10,8 +18,135 @@ class InitCommand extends Command {
     log.verbose('projectName:', this.projectName);
     log.verbose('force:', this.force);
   }
-  exec() {
-    // init 的业务逻辑
+  async exec() {
+    // 业务逻辑
+    try {
+      // 1、准备阶段
+      const ret = await this.prepare();
+      if (ret) {
+        // 2、下载模版
+        // 3、安装模版
+      }
+    } catch (e) {
+      log.error(e.message);
+    }
+  }
+  async prepare() {
+    // 1、判断当前目录是否为空
+    const localPath = process.cwd();
+    if (!this.IsDirEmpty(localPath)) {
+      let ifContinue = false;
+      if (!this.force) {
+        // 1.1 是否继续创建
+        ifContinue = (
+          await inquirer.prompt({
+            type: 'confirm',
+            name: 'ifContinue',
+            default: false,
+            message: '当前文件夹不为空，是否继续创建项目？',
+          })
+        ).ifContinue;
+        if (!ifContinue) return;
+      }
+
+      // 2、是否强制更新
+      if (ifContinue || this.force) {
+        // 给用户做二次确认
+        const { confirmDelete } = await inquirer.prompt({
+          type: 'confirm',
+          name: 'confirmDelete',
+          default: false,
+          message: '是否确认清空当前目录下的文件？',
+        });
+        // 清空当前目录
+        confirmDelete && fse.emptyDirSync(localPath);
+      }
+    }
+    return this.getProjectInfo();
+  }
+
+  async getProjectInfo() {
+    let projectInfo = {};
+    // 1、选择创建项目或组件
+    const { type } = await inquirer.prompt({
+      type: 'list',
+      name: 'type',
+      message: '请选择初始化类型',
+      default: TYPE_PROJECT,
+      choices: [
+        {
+          name: '项目',
+          value: TYPE_PROJECT,
+        },
+        {
+          name: '组件',
+          value: TYPE_COMPONENT,
+        },
+      ],
+    });
+    log.verbose('type:', type);
+    if (type === TYPE_PROJECT) {
+      // 2、获取项目基本信息
+      const project = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'projectName',
+          message: '请输入项目名称',
+          default: '',
+          validate: function (v) {
+            var done = this.async();
+            setTimeout(function () {
+              if (!/^[a-zA-Z]+[a-zA-Z0-9_-]*$/.test(v)) {
+                done('请输入合法的项目名称（首字符必须是字母,只能输入字母数字,下划线_,中划线-）');
+                return;
+              }
+              done(null, true);
+            }, 0);
+          },
+          filter: function (v) {
+            return v;
+          },
+        },
+        {
+          type: 'input',
+          name: 'projectVersion',
+          message: '请输入项目版本号',
+          default: '1.0.0',
+          validate: function (v) {
+            var done = this.async();
+            setTimeout(function () {
+              if (!!!semver.valid(v)) {
+                done('请输入合法的版本号');
+                return;
+              }
+              done(null, true);
+            }, 0);
+          },
+          filter: function (v) {
+            if (!!semver.valid(v)) {
+              return semver.valid(v);
+            } else {
+              return v;
+            }
+          },
+        },
+      ]);
+      projectInfo = {
+        type,
+        ...project,
+      };
+      console.log(projectInfo);
+    } else if (type === TYPE_COMPONENT) {
+    }
+    // return 项目基本信息(object)
+    return projectInfo;
+  }
+
+  IsDirEmpty(localPath) {
+    let fileList = fs.readdirSync(localPath);
+    // 文件过滤的逻辑
+    fileList.filter((file) => !file.startsWith('.') && ['node_modules'].indexOf(file) < 0);
+    return !fileList || fileList.length <= 0;
   }
 }
 

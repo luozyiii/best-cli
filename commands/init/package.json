@@ -28,7 +28,10 @@
   },
   "dependencies": {
     "@best-cli/command": "file:../../models/command",
-    "@best-cli/log": "file:../../utils/log"
+    "@best-cli/log": "file:../../utils/log",
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.1.2",
+    "semver": "^7.3.5"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
