@@ -22,9 +22,11 @@ class InitCommand extends Command {
     // 业务逻辑
     try {
       // 1、准备阶段
-      const ret = await this.prepare();
-      if (ret) {
+      const projectInfo = await this.prepare();
+      if (projectInfo) {
         // 2、下载模版
+        log.verbose('projectInfo:', projectInfo);
+        this.downLoadTemplate();
         // 3、安装模版
       }
     } catch (e) {
@@ -135,11 +137,20 @@ class InitCommand extends Command {
         type,
         ...project,
       };
-      console.log(projectInfo);
     } else if (type === TYPE_COMPONENT) {
     }
     // return 项目基本信息(object)
     return projectInfo;
+  }
+
+  downLoadTemplate() {
+    /**
+     * 1. 通过项目模版API获取项目模版信息
+     * 1.1 通过egg.js 搭建一个后端系统
+     * 1.2 通过npm存储项目模版
+     * 1.3 将项目模版信息存储在mongodb数据库中
+     * 1.4 通过egg.js 获取mongodb中的数据并且通过API返回
+     */
   }
 
   IsDirEmpty(localPath) {
