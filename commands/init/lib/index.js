@@ -25,16 +25,16 @@ class InitCommand extends Command {
     try {
       // 0、判断项目模板是否存在
       const template = await getProjectTemplate();
-      if(!template || template.length === 0) {
-        throw new Error('项目模板不存在')
+      if (!template || template.length === 0) {
+        throw new Error('项目模板不存在');
       }
-      this.template = template
+      this.template = template;
       // 1、准备阶段
       const projectInfo = await this.prepare();
       if (projectInfo) {
         // 2、下载模版
         log.verbose('projectInfo:', projectInfo);
-        this.projectInfo = projectInfo
+        this.projectInfo = projectInfo;
         this.downLoadTemplate();
         // 3、安装模版
       }
@@ -141,6 +141,12 @@ class InitCommand extends Command {
             }
           },
         },
+        {
+          type: 'list',
+          name: 'projectTemplate',
+          message: '请选择项目模板',
+          choices: this.createTemplateChoice(),
+        },
       ]);
       projectInfo = {
         type,
@@ -160,7 +166,7 @@ class InitCommand extends Command {
      * 1.3 将项目模版信息存储在mongodb数据库中
      * 1.4 通过egg.js 获取mongodb中的数据并且通过API返回
      */
-    console.log(this.projectInfo,this.template)
+    console.log(this.projectInfo, this.template);
   }
 
   IsDirEmpty(localPath) {
@@ -168,6 +174,13 @@ class InitCommand extends Command {
     // 文件过滤的逻辑
     fileList.filter((file) => !file.startsWith('.') && ['node_modules'].indexOf(file) < 0);
     return !fileList || fileList.length <= 0;
+  }
+
+  createTemplateChoice() {
+    return this.template.map((item) => ({
+      value: item.npmName,
+      name: item.name,
+    }));
   }
 }
 

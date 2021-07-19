@@ -46,5 +46,6 @@ cd ../../
 # 安装 core/cli 依赖
 cd core/cli/
 yarn
+yarn unlink
 yarn link
 

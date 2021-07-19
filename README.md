@@ -20,3 +20,12 @@ best init --targetPath /d/my/best-cli/commands/init test-project --debug --force
 // 缓存
 best init test-project --force --debug
 ```
+
+### 环境变量配置默认请求 URL
+
+```bash
+vim ~/.env
+
+# 添加内容
+BEST_CLI_BASE_URL=http://127.0.0.1:7001
+```
