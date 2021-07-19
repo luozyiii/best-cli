@@ -24,3 +24,6 @@ rm -rf utils/get-npm-info/node_modules/
 
 # 清理 utils/log 依赖
 rm -rf utils/log/node_modules/
+
+# 清理 utils/request 依赖
+rm -rf utils/request/node_modules/

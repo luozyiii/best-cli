@@ -8,6 +8,8 @@ const semver = require('semver');
 const Command = require('@best-cli/command');
 const log = require('@best-cli/log');
 
+const getProjectTemplate = require('./getProjectTemplate');
+
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
 
@@ -21,11 +23,18 @@ class InitCommand extends Command {
   async exec() {
     // 业务逻辑
     try {
+      // 0、判断项目模板是否存在
+      const template = await getProjectTemplate();
+      if(!template || template.length === 0) {
+        throw new Error('项目模板不存在')
+      }
+      this.template = template
       // 1、准备阶段
       const projectInfo = await this.prepare();
       if (projectInfo) {
         // 2、下载模版
         log.verbose('projectInfo:', projectInfo);
+        this.projectInfo = projectInfo
         this.downLoadTemplate();
         // 3、安装模版
       }
@@ -151,6 +160,7 @@ class InitCommand extends Command {
      * 1.3 将项目模版信息存储在mongodb数据库中
      * 1.4 通过egg.js 获取mongodb中的数据并且通过API返回
      */
+    console.log(this.projectInfo,this.template)
   }
 
   IsDirEmpty(localPath) {

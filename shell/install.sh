@@ -18,6 +18,11 @@ cd utils/log/
 yarn
 cd ../../
 
+# 安装 utils/request 依赖
+cd utils/request/
+yarn
+cd ../../
+
 # 安装 models/command 依赖
 cd models/command/
 yarn
