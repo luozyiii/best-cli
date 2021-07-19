@@ -1,12 +1,16 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const fse = require('fs-extra');
+const userHome = require('user-home');
 const inquirer = require('inquirer');
 const semver = require('semver');
 
 const Command = require('@best-cli/command');
+const Package = require('@best-cli/package');
 const log = require('@best-cli/log');
+const { spinnerStart, sleep } = require('@best-cli/utils');
 
 const getProjectTemplate = require('./getProjectTemplate');
 
@@ -35,7 +39,7 @@ class InitCommand extends Command {
         // 2、下载模版
         log.verbose('projectInfo:', projectInfo);
         this.projectInfo = projectInfo;
-        this.downLoadTemplate();
+        await this.downLoadTemplate();
         // 3、安装模版
       }
     } catch (e) {
@@ -158,7 +162,7 @@ class InitCommand extends Command {
     return projectInfo;
   }
 
-  downLoadTemplate() {
+  async downLoadTemplate() {
     /**
      * 1. 通过项目模版API获取项目模版信息
      * 1.1 通过egg.js 搭建一个后端系统
@@ -166,7 +170,41 @@ class InitCommand extends Command {
      * 1.3 将项目模版信息存储在mongodb数据库中
      * 1.4 通过egg.js 获取mongodb中的数据并且通过API返回
      */
-    console.log(this.projectInfo, this.template);
+    const { projectTemplate } = this.projectInfo;
+    const templateInfo = this.template.find((item) => item.npmName === projectTemplate);
+    log.verbose('templateInfo', templateInfo);
+    const targetPath = path.resolve(userHome, '.best', 'template');
+    const storeDir = path.resolve(userHome, '.best', 'template', 'node_modules');
+    const { npmName, version } = templateInfo;
+    const templateNpm = new Package({
+      targetPath,
+      storeDir,
+      packageName: npmName,
+      packageVersion: version,
+    });
+    if (!(await templateNpm.exists())) {
+      const spinner = spinnerStart('正在下载模板...');
+      await sleep();
+      try {
+        await templateNpm.install();
+        log.success('下载模板成功');
+      } catch (error) {
+        throw error;
+      } finally {
+        spinner.stop(true);
+      }
+    } else {
+      const spinner = spinnerStart('正在更新模板...');
+      await sleep();
+      try {
+        await templateNpm.update();
+        log.success('更新模板成功');
+      } catch (error) {
+        throw error;
+      } finally {
+        spinner.stop(true);
+      }
+    }
   }
 
   IsDirEmpty(localPath) {
