@@ -16,6 +16,8 @@ const getProjectTemplate = require('./getProjectTemplate');
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
+const TEMPLATE_TYPE_NORMAL = 'normal';
+const TEMPLATE_TYPE_CUSTOM = 'custom';
 
 class InitCommand extends Command {
   init() {
@@ -41,6 +43,7 @@ class InitCommand extends Command {
         this.projectInfo = projectInfo;
         await this.downLoadTemplate();
         // 3、安装模版
+        await this.installTemplate();
       }
     } catch (e) {
       log.error(e.message);
@@ -162,6 +165,46 @@ class InitCommand extends Command {
     return projectInfo;
   }
 
+  async installTemplate() {
+    if (this.templateInfo) {
+      if (!this.templateInfo.type) {
+        this.templateInfo.type = TEMPLATE_TYPE_NORMAL;
+      }
+      if (this.templateInfo.type === TEMPLATE_TYPE_NORMAL) {
+        // 标准安装
+        await this.installNormalTemplate();
+      } else if (this.templateInfo.type === TEMPLATE_TYPE_CUSTOM) {
+        // 自定义安装
+        await this.installCustomTemplate();
+      } else {
+        throw new Error('项目模版类型无法识别！');
+      }
+    } else {
+      throw new Error('项目模版信息不存在！');
+    }
+  }
+
+  // 标准安装
+  async installNormalTemplate() {
+    // 拷贝模版到当前目录
+    let spinner = spinnerStart('正在安装模版...');
+    await sleep(2000);
+    try {
+      const templatePath = path.resolve(this.templateNpm.cacheFilePath, 'template');
+      const targetPath = process.cwd();
+      fse.ensureDirSync(templatePath);
+      fse.ensureDirSync(targetPath);
+      fse.copy(templatePath, targetPath);
+    } catch (error) {
+      throw error;
+    } finally {
+      spinner.stop(true);
+      log.success('模版安装成功');
+    }
+  }
+
+  async installCustomTemplate() {}
+
   async downLoadTemplate() {
     /**
      * 1. 通过项目模版API获取项目模版信息
@@ -176,6 +219,7 @@ class InitCommand extends Command {
     const targetPath = path.resolve(userHome, '.best', 'template');
     const storeDir = path.resolve(userHome, '.best', 'template', 'node_modules');
     const { npmName, version } = templateInfo;
+    this.templateInfo = templateInfo;
     const templateNpm = new Package({
       targetPath,
       storeDir,
@@ -187,22 +231,28 @@ class InitCommand extends Command {
       await sleep();
       try {
         await templateNpm.install();
-        log.success('下载模板成功');
       } catch (error) {
         throw error;
       } finally {
         spinner.stop(true);
+        if (await templateNpm.exists()) {
+          log.success('下载模板成功');
+          this.templateNpm = templateNpm;
+        }
       }
     } else {
       const spinner = spinnerStart('正在更新模板...');
       await sleep();
       try {
         await templateNpm.update();
-        log.success('更新模板成功');
       } catch (error) {
         throw error;
       } finally {
         spinner.stop(true);
+        if (await templateNpm.exists()) {
+          log.success('更新模板成功');
+          this.templateNpm = templateNpm;
+        }
       }
     }
   }
