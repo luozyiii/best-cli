@@ -19,6 +19,9 @@ const TYPE_COMPONENT = 'component';
 const TEMPLATE_TYPE_NORMAL = 'normal';
 const TEMPLATE_TYPE_CUSTOM = 'custom';
 
+// 命令白名单
+const WHITE_COMMAND = ['npm', 'cnpm', 'yarn'];
+
 class InitCommand extends Command {
   init() {
     this.projectName = this._argv[0] || '';
@@ -184,6 +187,34 @@ class InitCommand extends Command {
     }
   }
 
+  // 白名单命令检测功能
+  checkCommand(cmd) {
+    if (WHITE_COMMAND.includes(cmd)) {
+      return cmd;
+    }
+    return null;
+  }
+
+  async execCommand(command, errMsg) {
+    let ret;
+    if (command) {
+      const cmdArray = command.split(' ');
+      const cmd = this.checkCommand(cmdArray[0]);
+      if (!cmd) {
+        throw new Error('命令不存在！命令：' + command);
+      }
+      const args = cmdArray.slice(1);
+      ret = await execAsync(cmd, args, {
+        cwd: process.cwd(),
+        stdio: 'inherit',
+      });
+      if (ret !== 0) {
+        throw new Error(errMsg);
+      }
+    }
+    return ret;
+  }
+
   // 标准安装
   async installNormalTemplate() {
     // 拷贝模版到当前目录
@@ -203,29 +234,9 @@ class InitCommand extends Command {
     }
     // 依赖安装
     const { installCommand, startCommand } = this.templateInfo;
-    let installRet;
-    if (installCommand) {
-      const installCmd = installCommand.split(' ');
-      const cmd = installCmd[0];
-      const args = installCmd.slice(1);
-      installRet = await execAsync(cmd, args, {
-        cwd: process.cwd(),
-        stdio: 'inherit',
-      });
-      if (installRet !== 0) {
-        throw new Error('依赖安装过程中失败! ');
-      }
-    }
+    await this.execCommand(installCommand, '依赖安装过程中失败! ');
     // 启动命令
-    if (startCommand) {
-      const startCmd = startCommand.split(' ');
-      const cmd = startCmd[0];
-      const args = startCmd.slice(1);
-      await execAsync(cmd, args, {
-        cwd: process.cwd(),
-        stdio: 'inherit',
-      });
-    }
+    await this.execCommand(startCommand, '启动命令过程中失败! ');
   }
 
   async installCustomTemplate() {}
