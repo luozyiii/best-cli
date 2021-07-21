@@ -21,7 +21,8 @@
     "path-exists": "^4.0.0",
     "root-check": "1.0.0",
     "semver": "^7.3.5",
-    "user-home": "^3.0.0"
+    "user-home": "^3.0.0",
+    "dotenv": "^10.0.0"
   },
   "directories": {
     "lib": "lib",
@@ -39,9 +40,6 @@
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
-  },
-  "devDependencies": {
-    "dotenv": "^10.0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -26,8 +26,8 @@ best init [name] [options]
 Options:
 
   -tp, --targetPath <targetPath>  指定本地调试文件路径
-  -f,  --force  <force>           强制
-  -d,  --debug <debug>            开启调试模式: 打印调试信息
+  -f,  --force                    强制在当前目录安装模版
+  -d,  --debug                    开启调试模式: 打印调试信息
   -h,  --help                     输出用法信息
 ```
 
