@@ -6,6 +6,8 @@ const fse = require('fs-extra');
 const userHome = require('user-home');
 const inquirer = require('inquirer');
 const semver = require('semver');
+const glob = require('glob');
+const ejs = require('ejs');
 
 const Command = require('@best-cli/command');
 const Package = require('@best-cli/package');
@@ -49,7 +51,7 @@ class InitCommand extends Command {
         await this.installTemplate();
       }
     } catch (e) {
-      log.error(e.message);
+      log.error(e);
     }
   }
   async prepare() {
@@ -87,7 +89,15 @@ class InitCommand extends Command {
   }
 
   async getProjectInfo() {
+    function isValidName(v) {
+      return !/^[a-zA-Z]+[a-zA-Z0-9_-]*$/.test(v);
+    }
     let projectInfo = {};
+    let isProjectNameValid = false;
+    if (!isValidName(this.projectName)) {
+      isProjectNameValid = true;
+      projectInfo.projectName = this.projectName;
+    }
     // 1、选择创建项目或组件
     const { type } = await inquirer.prompt({
       type: 'list',
@@ -108,26 +118,30 @@ class InitCommand extends Command {
     log.verbose('type:', type);
     if (type === TYPE_PROJECT) {
       // 2、获取项目基本信息
-      const project = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'projectName',
-          message: '请输入项目名称',
-          default: '',
-          validate: function (v) {
-            var done = this.async();
-            setTimeout(function () {
-              if (!/^[a-zA-Z]+[a-zA-Z0-9_-]*$/.test(v)) {
-                done('请输入合法的项目名称（首字符必须是字母,只能输入字母数字,下划线_,中划线-）');
-                return;
-              }
-              done(null, true);
-            }, 0);
-          },
-          filter: function (v) {
-            return v;
-          },
+      const projectNamePrompt = {
+        type: 'input',
+        name: 'projectName',
+        message: '请输入项目名称',
+        default: '',
+        validate: function (v) {
+          var done = this.async();
+          setTimeout(function () {
+            if (isValidName(v)) {
+              done('请输入合法的项目名称（首字符必须是字母,只能输入字母数字,下划线_,中划线-）');
+              return;
+            }
+            done(null, true);
+          }, 0);
         },
+        filter: function (v) {
+          return v;
+        },
+      };
+      const projectPrompt = [];
+      if (!isProjectNameValid) {
+        projectPrompt.push(projectNamePrompt);
+      }
+      projectPrompt.push(
         {
           type: 'input',
           name: 'projectVersion',
@@ -157,8 +171,10 @@ class InitCommand extends Command {
           message: '请选择项目模板',
           choices: this.createTemplateChoice(),
         },
-      ]);
+      );
+      const project = await inquirer.prompt(projectPrompt);
       projectInfo = {
+        ...projectInfo,
         type,
         ...project,
       };
@@ -166,7 +182,11 @@ class InitCommand extends Command {
     }
     // 生成classname
     if (projectInfo.projectName) {
+      projectInfo.name = projectInfo.projectName;
       projectInfo.className = require('kebab-case')(projectInfo.projectName).replace(/^-/, '');
+    }
+    if (projectInfo.projectVersion) {
+      projectInfo.version = projectInfo.projectVersion;
     }
     return projectInfo;
   }
@@ -218,23 +238,66 @@ class InitCommand extends Command {
     return ret;
   }
 
+  // ejs 动态渲染模板
+  ejsRender(options) {
+    const dir = process.cwd();
+    const params = {
+      cwd: dir,
+      ignore: options.ignore || '',
+      nodir: true,
+    };
+    const projectInfo = this.projectInfo;
+    return new Promise((resolve, reject) => {
+      glob('**', params, (err, files) => {
+        if (err) {
+          reject(err);
+        }
+        Promise.all(
+          files.map((file) => {
+            const filePath = path.join(dir, file);
+            return new Promise((resolve1, reject1) => {
+              ejs.renderFile(filePath, projectInfo, {}, (err, result) => {
+                if (err) {
+                  reject1();
+                } else {
+                  // 重新写入
+                  fse.writeFileSync(filePath, result);
+                  resolve1();
+                }
+              });
+            });
+          }),
+        )
+          .then(() => {
+            resolve();
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    });
+  }
+
   // 标准安装
   async installNormalTemplate() {
     // 拷贝模版到当前目录
     let spinner = spinnerStart('正在安装模版...');
-    await sleep(2000);
+    await sleep();
     try {
       const templatePath = path.resolve(this.templateNpm.cacheFilePath, 'template');
       const targetPath = process.cwd();
       fse.ensureDirSync(templatePath);
       fse.ensureDirSync(targetPath);
-      fse.copy(templatePath, targetPath);
+      await fse.copy(templatePath, targetPath);
     } catch (error) {
       throw error;
     } finally {
       spinner.stop(true);
       log.success('模版安装成功');
     }
+    // ejs 动态渲染模板
+    const ignore = ['node_modules/**', 'public/**', 'yarn.lock'];
+    await this.ejsRender({ ignore });
     // 依赖安装
     const { installCommand, startCommand } = this.templateInfo;
     await this.execCommand(installCommand, '依赖安装过程中失败! ');
