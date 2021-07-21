@@ -164,7 +164,10 @@ class InitCommand extends Command {
       };
     } else if (type === TYPE_COMPONENT) {
     }
-    // return 项目基本信息(object)
+    // 生成classname
+    if (projectInfo.projectName) {
+      projectInfo.className = require('kebab-case')(projectInfo.projectName).replace(/^-/, '');
+    }
     return projectInfo;
   }
 

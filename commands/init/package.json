@@ -34,6 +34,7 @@
     "@best-cli/utils": "file:../../utils/utils",
     "fs-extra": "^10.0.0",
     "inquirer": "^8.1.2",
+    "kebab-case": "^1.0.1",
     "semver": "^7.3.5",
     "user-home": "^3.0.0"
   },
