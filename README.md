@@ -7,7 +7,10 @@
 ### 安装
 
 ```bash
-npm i @best-cli/core -g
+# 使用cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+# 全局安装
+cnpm i @best-cli/core -g
 ```
 
 ### 查看帮助
