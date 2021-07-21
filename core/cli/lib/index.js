@@ -37,7 +37,7 @@ async function core() {
 // 脚手架启动阶段
 async function prepare() {
   checkPkgVersion();
-  // checkRoot();
+  checkRoot();
   checkUserHome();
   // checkInputArgs();
   await checkEnv();
@@ -161,7 +161,6 @@ const checkUserHome = async () => {
 function checkRoot() {
   const rootCheck = require('root-check');
   rootCheck();
-  console.log(process.geteuid());
 }
 
 // 检查版本号

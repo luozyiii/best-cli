@@ -141,37 +141,35 @@ class InitCommand extends Command {
       if (!isProjectNameValid) {
         projectPrompt.push(projectNamePrompt);
       }
-      projectPrompt.push(
-        {
-          type: 'input',
-          name: 'projectVersion',
-          message: '请输入项目版本号',
-          default: '1.0.0',
-          validate: function (v) {
-            var done = this.async();
-            setTimeout(function () {
-              if (!!!semver.valid(v)) {
-                done('请输入合法的版本号');
-                return;
-              }
-              done(null, true);
-            }, 0);
-          },
-          filter: function (v) {
-            if (!!semver.valid(v)) {
-              return semver.valid(v);
-            } else {
-              return v;
+      projectPrompt.push({
+        type: 'input',
+        name: 'projectVersion',
+        message: '请输入项目版本号',
+        default: '1.0.0',
+        validate: function (v) {
+          var done = this.async();
+          setTimeout(function () {
+            if (!!!semver.valid(v)) {
+              done('请输入合法的版本号');
+              return;
             }
-          },
+            done(null, true);
+          }, 0);
         },
-        {
-          type: 'list',
-          name: 'projectTemplate',
-          message: '请选择项目模板',
-          choices: this.createTemplateChoice(),
+        filter: function (v) {
+          if (!!semver.valid(v)) {
+            return semver.valid(v);
+          } else {
+            return v;
+          }
         },
-      );
+      });
+      projectPrompt.push({
+        type: 'list',
+        name: 'projectTemplate',
+        message: '请选择项目模板',
+        choices: this.createTemplateChoice(),
+      });
       const project = await inquirer.prompt(projectPrompt);
       projectInfo = {
         ...projectInfo,
