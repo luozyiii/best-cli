@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@best-cli/log": "file:../../utils/log",
-    "@best-cli/package": "file:../../models/package"
+    "@best-cli/package": "file:../../models/package",
+    "@best-cli/utils": "file:../../utils/utils"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"

@@ -10,7 +10,7 @@ const semver = require('semver');
 const Command = require('@best-cli/command');
 const Package = require('@best-cli/package');
 const log = require('@best-cli/log');
-const { spinnerStart, sleep } = require('@best-cli/utils');
+const { spinnerStart, sleep, execAsync } = require('@best-cli/utils');
 
 const getProjectTemplate = require('./getProjectTemplate');
 
@@ -200,6 +200,31 @@ class InitCommand extends Command {
     } finally {
       spinner.stop(true);
       log.success('模版安装成功');
+    }
+    // 依赖安装
+    const { installCommand, startCommand } = this.templateInfo;
+    let installRet;
+    if (installCommand) {
+      const installCmd = installCommand.split(' ');
+      const cmd = installCmd[0];
+      const args = installCmd.slice(1);
+      installRet = await execAsync(cmd, args, {
+        cwd: process.cwd(),
+        stdio: 'inherit',
+      });
+      if (installRet !== 0) {
+        throw new Error('依赖安装过程中失败! ');
+      }
+    }
+    // 启动命令
+    if (startCommand) {
+      const startCmd = startCommand.split(' ');
+      const cmd = startCmd[0];
+      const args = startCmd.slice(1);
+      await execAsync(cmd, args, {
+        cwd: process.cwd(),
+        stdio: 'inherit',
+      });
     }
   }
 

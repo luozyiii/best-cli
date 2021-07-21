@@ -1,10 +1,10 @@
 'use strict';
 
 const path = require('path');
-const cp = require('child_process');
 
 const Package = require('@best-cli/package');
 const log = require('@best-cli/log');
+const { exec: spawn } = require('@best-cli/utils');
 
 // 配置表
 const SETTINGS = {
@@ -86,14 +86,6 @@ async function exec() {
       log.error(e.message);
     }
   }
-}
-
-// 兼容windows
-function spawn(command, args, options) {
-  const win32 = process.platform === 'win32';
-  const cmd = win32 ? 'cmd' : command;
-  const cmdArgs = win32 ? ['/c'].concat(command, args) : args;
-  return cp.spawn(cmd, cmdArgs, options || {});
 }
 
 module.exports = exec;
