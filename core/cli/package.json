@@ -1,6 +1,6 @@
 {
   "name": "@best-cli/core",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "前端脚手架",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
@@ -16,13 +16,13 @@
     "@best-cli/log": "file:../../utils/log",
     "colors": "^1.4.0",
     "commander": "^8.0.0",
+    "dotenv": "^10.0.0",
     "import-local": "^3.0.2",
     "npmlog": "^4.1.2",
     "path-exists": "^4.0.0",
     "root-check": "1.0.0",
     "semver": "^7.3.5",
-    "user-home": "^3.0.0",
-    "dotenv": "^10.0.0"
+    "user-home": "^3.0.0"
   },
   "directories": {
     "lib": "lib",

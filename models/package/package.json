@@ -1,6 +1,6 @@
 {
   "name": "@best-cli/package",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "best-cli npm modules",
   "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
@@ -27,10 +27,10 @@
     "@best-cli/format-path": "file:../../utils/format-path",
     "@best-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@best-cli/utils": "file:../../utils/utils",
-    "pkg-dir": "^5.0.0",
     "fs-extra": "^10.0.0",
     "npminstall": "^4.11.0",
-    "path-exists": "^4.0.0"
+    "path-exists": "^4.0.0",
+    "pkg-dir": "^5.0.0"
   },
   "bugs": {
     "url": "https://github.com/luozyiii/best-cli/issues"
