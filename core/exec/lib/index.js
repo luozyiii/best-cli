@@ -32,7 +32,6 @@ async function exec() {
   const cmdName = cmdObj.name();
   const packageName = SETTINGS[cmdName];
   const packageVersion = 'latest';
-
   if (!targetPath) {
     targetPath = path.resolve(homePath, CACHE_DIR); // 生成缓存路径
     storeDir = path.resolve(targetPath, 'node_modules');
@@ -59,6 +58,9 @@ async function exec() {
       packageName,
       packageVersion,
     });
+    if (!(await pkg.exists())) {
+      log.error('本地调试文件路径不存在');
+    }
   }
   const rootFile = pkg.getRootFilePath();
   if (rootFile) {

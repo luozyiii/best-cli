@@ -29,7 +29,7 @@ best init [name] [options]
 Options:
 
   -tp, --targetPath <targetPath>  指定本地调试文件路径
-  -f,  --force                    强制在当前目录安装模版
+  -f,  --force                    是否强制初始化项目
   -d,  --debug                    开启调试模式: 打印调试信息
   -h,  --help                     输出用法信息
 ```
@@ -52,4 +52,37 @@ vim ~/.env
 
 # 添加内容
 BEST_CLI_BASE_URL=http://127.0.0.1:7001
+```
+
+```javascript
+// 模板接口返回示例
+[
+  {
+    name: 'vue3标准模板',
+    npmName: 'best-cli-template-vue3',
+    version: '1.0.3',
+    type: 'normal',
+    installCommand: 'yarn install',
+    startCommand: 'yarn serve',
+    tag: ['project'],
+    ignore: ['public/**', 'yarn.lock'],
+  },
+  {
+    name: 'vue-element-admin管理后台模板',
+    npmName: 'best-cli-template-vue-element-admin',
+    version: '1.0.0',
+    type: 'normal',
+    tag: ['component'],
+  },
+  {
+    name: 'vue3自定义标准模板',
+    npmName: 'best-cli-template-custom-vue3',
+    version: '1.0.0',
+    type: 'custom',
+    installCommand: 'yarn install',
+    startCommand: 'yarn serve',
+    tag: ['project'],
+    ignore: ['public/**', 'yarn.lock'],
+  },
+];
 ```

@@ -1,21 +1,23 @@
-# `前端脚手架(best)`
+# `前端脚手架(@best-cli/core)`
 
-> 前端自动化
+> 自动化下载、安装项目/组件模板，简化项目搭建流程。
 
-### 安装
+### 三种安装方式
 
 ```bash
-# 使用cnpm
+# 一、使用npm
+npm i @best-cli/core -g
+npm uninstall @best-cli/core -g
+
+# 二、使用cnpm
 npm install -g cnpm --registry=https://registry.npm.taobao.org
-# 全局安装
+# 安装
 cnpm i @best-cli/core -g
-```
+cnpm uninstall @best-cli/core -g
 
-### 查看帮助
-
-```bash
-best -h
-best --help
+# 三、使用yarn
+yarn global add @best-cli/core
+yarn global remove @best-cli/core
 ```
 
 ### 项目初始化
@@ -27,27 +29,22 @@ best init [name] [options]
 Options:
 
   -tp, --targetPath <targetPath>  指定本地调试文件路径
-  -f,  --force                    强制在当前目录安装模版
+  -f,  --force                    是否强制初始化项目
   -d,  --debug                    开启调试模式: 打印调试信息
   -h,  --help                     输出用法信息
 ```
 
-例子
+- 初始化一个 test-project 项目
 
 ```javascript
-// 本地
-best init test-project --targetPath /Users/luozhiyi/Work/project/best-cli/commands/init --debug --force
-best init test-project --targetPath /d/my/best-cli/commands/init --debug --force
-
-// 缓存
-best init test-project --force --debug
+best init test-project
 ```
 
-### 环境变量配置默认请求 URL
+### 查看帮助
 
 ```bash
-vim ~/.env
-
-# 添加内容
-BEST_CLI_BASE_URL=http://127.0.0.1:7001
+best -h
+best --help
 ```
+
+### 项目/组件 模板
