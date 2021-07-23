@@ -184,7 +184,7 @@ class InitCommand extends Command {
       // 组件基本信息
       const descriptionPrompt = {
         type: 'input',
-        name: 'componentDescrition',
+        name: 'componentDescription',
         message: '请输入组件信息',
         validate: function (v) {
           var done = this.async();
@@ -206,16 +206,15 @@ class InitCommand extends Command {
         ...component,
       };
     }
-    // 生成classname
     if (projectInfo.projectName) {
-      projectInfo.name = projectInfo.projectName;
-      projectInfo.className = require('kebab-case')(projectInfo.projectName).replace(/^-/, '');
+      projectInfo.name = await require('kebab-case')(projectInfo.projectName).replace(/^-/, '');
+      projectInfo.projectName = projectInfo.name;
     }
     if (projectInfo.projectVersion) {
       projectInfo.version = projectInfo.projectVersion;
     }
-    if (projectInfo.componentDescrition) {
-      projectInfo.descrition = projectInfo.componentDescrition;
+    if (projectInfo.componentDescription) {
+      projectInfo.description = projectInfo.componentDescription;
     }
     return projectInfo;
   }
@@ -287,7 +286,8 @@ class InitCommand extends Command {
             return new Promise((resolve1, reject1) => {
               ejs.renderFile(filePath, projectInfo, {}, (err, result) => {
                 if (err) {
-                  reject1();
+                  log.verbose(`copy出错路径：${filePath}`);
+                  reject1(err);
                 } else {
                   // 重新写入
                   fse.writeFileSync(filePath, result);
