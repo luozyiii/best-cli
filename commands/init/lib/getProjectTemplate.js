@@ -1,4 +1,4 @@
-const request = require('@best-cli/request');
+const { request } = require('@best-cli/utils');
 
 module.exports = function () {
   return request({

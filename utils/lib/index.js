@@ -1,18 +1,13 @@
 'use strict';
 
-const { rejects } = require('assert');
-const { resolve } = require('path');
+const log = require('./log');
+const request = require('./request');
+const npm = require('./npm');
+const formatPath = require('./formatPath');
+const spinner = require('./spinner');
 
 function isObject(o) {
   return Object.prototype.toString.call(o) === '[object Object]';
-}
-
-function spinnerStart(msg = 'loading', spinnerString = '|/-\\') {
-  const Spinner = require('cli-spinner').Spinner;
-  const spinner = new Spinner(msg + ' %s');
-  spinner.setSpinnerString(spinnerString);
-  spinner.start();
-  return spinner;
 }
 
 function sleep(timeout = 1000) {
@@ -39,4 +34,4 @@ function execAsync(command, args, options) {
   });
 }
 
-module.exports = { isObject, spinnerStart, sleep, exec, execAsync };
+module.exports = { log, request, npm, formatPath, spinner, isObject, sleep, exec, execAsync };

@@ -6,9 +6,8 @@ const pkgDir = require('pkg-dir').sync;
 const pathExists = require('path-exists').sync;
 const npminstall = require('npminstall');
 
-const { isObject } = require('@best-cli/utils');
-const formatPath = require('@best-cli/format-path');
-const { getDefaultRegistry, getNpmLatestVersion } = require('@best-cli/get-npm-info');
+const { isObject, formatPath, npm } = require('@best-cli/utils');
+const { getDefaultRegistry, getNpmLatestVersion } = npm;
 
 class Package {
   constructor(options) {

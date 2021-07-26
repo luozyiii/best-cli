@@ -1,27 +1,7 @@
-# 安装 utils/utils 依赖
-cd utils/utils/
+# 安装 utils 依赖
+cd utils/
 yarn
-cd ../../
-
-# 安装 utils/format-path 依赖
-cd utils/format-path/
-yarn
-cd ../../
-
-# 安装 utils/get-npm-info 依赖
-cd utils/get-npm-info/
-yarn
-cd ../../
-
-# 安装 utils/log 依赖
-cd utils/log/
-yarn
-cd ../../
-
-# 安装 utils/request 依赖
-cd utils/request/
-yarn
-cd ../../
+cd ../
 
 # 安装 models/command 依赖
 cd models/command/

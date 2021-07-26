@@ -5,7 +5,7 @@
   "keywords": [
     "command"
   ],
-  "author": "罗智毅 <zhiyiluo@drgou.com>",
+  "author": "luozyiii <924361501@qq.com>",
   "homepage": "https://github.com/luozyiii/best-cli#readme",
   "license": "ISC",
   "main": "lib/index.js",
@@ -30,7 +30,7 @@
     "url": "https://github.com/luozyiii/best-cli/issues"
   },
   "dependencies": {
-    "@best-cli/log": "file:../../utils/log",
+    "@best-cli/utils": "file:../../utils",
     "colors": "^1.4.0",
     "semver": "^7.3.5"
   }

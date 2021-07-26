@@ -3,8 +3,7 @@
 const path = require('path');
 
 const Package = require('@best-cli/package');
-const log = require('@best-cli/log');
-const { exec: spawn } = require('@best-cli/utils');
+const { log, exec: spawn } = require('@best-cli/utils');
 
 // 配置表
 const SETTINGS = {

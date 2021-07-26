@@ -48,19 +48,19 @@
 
 #### 工具模块 utils
 
-- utils/format-path
+- formatPath.js
   文件路径兼容 window 和 mac os
 
-- utils/get-npm-info
+- npm.js
   获取 npm 包基础信息
 
-- utils/log
+- log.js
   npmlog 的二次封装
 
-- utils/request
+- request.js
   axios 的二次封装
 
-- utils/utils
+- other
   常用工具函数封装
 
 ### 命令执行流程

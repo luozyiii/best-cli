@@ -15,7 +15,7 @@ const colors = require('colors/safe');
 const userHome = require('user-home'); // 该依赖包要废弃
 const pathExists = require('path-exists');
 const commander = require('commander');
-const log = require('@best-cli/log');
+const { log } = require('@best-cli/utils');
 const exec = require('@best-cli/exec');
 
 const pkg = require('../package.json');
@@ -98,7 +98,8 @@ async function checkGlobalUpdate() {
    */
   const curVersion = pkg.version;
   const npmName = pkg.name;
-  const { getNpmSemverVersion } = require('@best-cli/get-npm-info');
+  const { npm } = require('@best-cli/utils');
+  const { getNpmSemverVersion } = npm;
   const lastVersion = await getNpmSemverVersion(curVersion, npmName);
   if (lastVersion && semver.gt(lastVersion, curVersion)) {
     log.warn(

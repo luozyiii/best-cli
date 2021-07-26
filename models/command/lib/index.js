@@ -3,7 +3,7 @@
 const semver = require('semver');
 const colors = require('colors/safe');
 
-const log = require('@best-cli/log');
+const { log } = require('@best-cli/utils');
 
 // 最低node版本
 const LOWEST_NODE_VERSION = '12.0.0';

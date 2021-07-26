@@ -11,8 +11,7 @@ const ejs = require('ejs');
 
 const Command = require('@best-cli/command');
 const Package = require('@best-cli/package');
-const log = require('@best-cli/log');
-const { spinnerStart, sleep, execAsync } = require('@best-cli/utils');
+const { log, spinner, sleep, execAsync } = require('@best-cli/utils');
 
 const getProjectTemplate = require('./getProjectTemplate');
 
@@ -310,7 +309,7 @@ class InitCommand extends Command {
   // 标准安装
   async installNormalTemplate() {
     // 拷贝模版到当前目录
-    let spinner = spinnerStart('正在安装模版...');
+    let spinnerLoading = spinner('正在安装模版');
     await sleep();
     try {
       const templatePath = path.resolve(this.templateNpm.cacheFilePath, 'template');
@@ -321,7 +320,7 @@ class InitCommand extends Command {
     } catch (error) {
       throw error;
     } finally {
-      spinner.stop(true);
+      spinnerLoading.stop(true);
       log.success('模版安装成功');
     }
     // ejs 动态渲染模板
@@ -378,28 +377,28 @@ class InitCommand extends Command {
       packageVersion: version,
     });
     if (!(await templateNpm.exists())) {
-      const spinner = spinnerStart('正在下载模板...');
+      const spinnerLoading = spinner('正在下载模板');
       await sleep();
       try {
         await templateNpm.install();
       } catch (error) {
         throw error;
       } finally {
-        spinner.stop(true);
+        spinnerLoading.stop(true);
         if (await templateNpm.exists()) {
           log.success('下载模板成功');
           this.templateNpm = templateNpm;
         }
       }
     } else {
-      const spinner = spinnerStart('正在更新模板...');
+      const spinnerLoading = spinner('正在更新模板');
       await sleep();
       try {
         await templateNpm.update();
       } catch (error) {
         throw error;
       } finally {
-        spinner.stop(true);
+        spinnerLoading.stop(true);
         if (await templateNpm.exists()) {
           log.success('更新模板成功');
           this.templateNpm = templateNpm;

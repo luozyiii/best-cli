@@ -28,10 +28,8 @@
   },
   "dependencies": {
     "@best-cli/command": "file:../../models/command",
-    "@best-cli/log": "file:../../utils/log",
     "@best-cli/package": "file:../../models/package",
-    "@best-cli/request": "file:../../utils/request",
-    "@best-cli/utils": "file:../../utils/utils",
+    "@best-cli/utils": "file:../../utils",
     "ejs": "^3.1.6",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.7",

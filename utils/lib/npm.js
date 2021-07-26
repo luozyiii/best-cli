@@ -5,6 +5,7 @@ const urljoin = require('url-join');
 const semver = require('semver');
 const semverRsort = require('semver/functions/rsort');
 
+// 从 registry 获取 npm 的信息
 function getNpmInfo(npmName, registry) {
   if (!npmName) {
     return null;
@@ -24,10 +25,12 @@ function getNpmInfo(npmName, registry) {
     });
 }
 
+// 获取 registry 信息
 function getDefaultRegistry(isOriginal = false) {
   return isOriginal ? 'https://registry.npmjs.org' : 'https://registry.npm.taobao.org';
 }
 
+// 获取某个 npm 的所有版本号
 async function getNpmVersions(npmName, registry) {
   const data = await getNpmInfo(npmName, registry);
   if (data) {
@@ -42,6 +45,7 @@ function getNpmSemverVersions(baseVersion, versions) {
   return semverRsort(lastVersions);
 }
 
+// 根据指定 version 获取符合 semver 规范的最新版本号
 async function getNpmSemverVersion(baseVersion, npmName, registry) {
   const versions = await getNpmVersions(npmName, registry);
   const newVersions = getNpmSemverVersions(baseVersion, versions);
@@ -50,6 +54,7 @@ async function getNpmSemverVersion(baseVersion, npmName, registry) {
   }
 }
 
+// 获取规范的最新版本号
 async function getNpmLatestVersion(npmName, registry) {
   let versions = await getNpmVersions(npmName, registry);
   if (versions) {
