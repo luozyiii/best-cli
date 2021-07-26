@@ -25,8 +25,6 @@ async function exec() {
   let homePath = process.env.CLI_HOME_PATH;
   let storeDir = '';
   let pkg;
-  log.verbose('targetPath', targetPath);
-  log.verbose('homePath', homePath);
 
   const cmdObj = arguments[arguments.length - 1];
   const cmdName = cmdObj.name();
@@ -35,8 +33,6 @@ async function exec() {
   if (!targetPath) {
     targetPath = path.resolve(homePath, CACHE_DIR); // 生成缓存路径
     storeDir = path.resolve(targetPath, 'node_modules');
-    log.verbose('targetPathEnd', targetPath);
-    log.verbose('homePathEnd', homePath);
 
     pkg = new Package({
       targetPath,
@@ -81,7 +77,7 @@ async function exec() {
         process.exit(1);
       });
       child.on('exit', (e) => {
-        log.verbose('命令执行成功:', e);
+        log.success('命令执行成功:', e);
         process.exit(e);
       });
     } catch (e) {

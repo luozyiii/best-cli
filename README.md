@@ -55,6 +55,7 @@ BEST_CLI_BASE_URL=http://127.0.0.1:7001
 ```
 
 ```javascript
+// 模板接口地址: http://112.74.201.142:7002/project/template
 // 模板接口返回示例
 [
   {
@@ -85,4 +86,20 @@ BEST_CLI_BASE_URL=http://127.0.0.1:7001
     ignore: ['public/**', 'yarn.lock'],
   },
 ];
+```
+
+### 发布 npm
+
+```bash
+# 版本
+lerna version
+# 查看上版本以来所有的变更
+lerna changed
+# 查看 diff
+lerna diff
+# 项目发布 后，git会打包生成tag
+lerna publish
+
+# 发布失败后 可执行
+lerna publish from-git
 ```

@@ -5,6 +5,7 @@ const colors = require('colors/safe');
 
 const log = require('@best-cli/log');
 
+// 最低node版本
 const LOWEST_NODE_VERSION = '12.0.0';
 
 class Command {

@@ -53,6 +53,7 @@ function registerCommand() {
     .option('-d, --debug', '是否开启调试模式', false)
     .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
 
+  // 注册init命令
   program.command('init [projectName]').option('-f, --force', '是否强制初始化项目').action(exec);
 
   // 开启 debug 模式
@@ -63,9 +64,8 @@ function registerCommand() {
       process.env.LOG_LEVEL = 'info';
     }
     log.level = process.env.LOG_LEVEL;
+    log.verbose('debug', '开启debug模式');
   });
-
-  log.verbose('debug', 'test debug log'); // 开启debug模式后可打印这句
 
   // 指定targetPath
   program.on('option:targetPath', function () {
