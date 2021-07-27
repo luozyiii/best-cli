@@ -10,6 +10,8 @@ module.exports = core;
  * any => .js
  */
 const path = require('path');
+const fs = require('fs');
+const fse = require('fs-extra');
 const semver = require('semver');
 const colors = require('colors/safe');
 const userHome = require('user-home'); // 该依赖包要废弃
@@ -19,7 +21,7 @@ const { log } = require('@best-cli/utils');
 const exec = require('@best-cli/exec');
 
 const pkg = require('../package.json');
-const constant = require('./const');
+const { DEFAULT_HOME, DEPENDENCIES_PATH } = require('./const');
 
 const program = new commander.Command();
 async function core() {
@@ -50,11 +52,34 @@ function registerCommand() {
     .name(Object.keys(pkg.bin)[0])
     .usage('<command> [options]')
     .version(pkg.version)
-    .option('-d, --debug', '是否开启调试模式', false)
+    .option('--debug', '是否开启调试模式', false)
     .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径', '');
 
-  // 注册init命令
+  // 注册 init 命令
   program.command('init [projectName]').option('-f, --force', '是否强制初始化项目').action(exec);
+
+  // 注册 clean 命令
+  program
+    .command('clean')
+    .description('清空缓存文件')
+    .option('-a, --all', '清空全部')
+    .option('-d, --dep', '清空依赖文件')
+    .action((options) => {
+      log.notice('开始清空缓存文件');
+      if (options.all) {
+        cleanAll();
+      } else if (options.dep) {
+        const depPath = path.resolve(process.env.CLI_HOME_PATH, DEPENDENCIES_PATH);
+        if (fs.existsSync(depPath)) {
+          fse.emptyDirSync(depPath);
+          log.success('清空依赖文件成功', depPath);
+        } else {
+          log.success('文件夹不存在', depPath);
+        }
+      } else {
+        cleanAll();
+      }
+    });
 
   // 开启 debug 模式
   program.on('option:debug', function () {
@@ -64,7 +89,7 @@ function registerCommand() {
       process.env.LOG_LEVEL = 'info';
     }
     log.level = process.env.LOG_LEVEL;
-    log.verbose('debug', '开启debug模式');
+    log.verbose('debug', '打开调试模式');
   });
 
   // 指定targetPath
@@ -130,7 +155,7 @@ function createDefaultConfig() {
   if (process.env.CLI_HOME) {
     cliConfig['cliHome'] = path.join(userHome, process.env.CLI_HOME);
   } else {
-    cliConfig['cliHome'] = path.join(userHome, constant.DEFAULT_HOME);
+    cliConfig['cliHome'] = path.join(userHome, DEFAULT_HOME);
   }
   process.env.CLI_HOME_PATH = cliConfig['cliHome'];
 }
@@ -168,4 +193,13 @@ function checkRoot() {
 function checkPkgVersion() {
   log.info(`v${pkg.version}`);
   // log.success('success test');
+}
+
+function cleanAll() {
+  if (fs.existsSync(process.env.CLI_HOME_PATH)) {
+    fse.emptyDirSync(process.env.CLI_HOME_PATH);
+    log.success('清空全部缓存文件成功', process.env.CLI_HOME_PATH);
+  } else {
+    log.success('文件夹不存在', process.env.CLI_HOME_PATH);
+  }
 }

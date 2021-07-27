@@ -40,6 +40,20 @@ Options:
 best init test-project
 ```
 
+### 缓存清理
+
+```bash
+# 清空全部
+best clean
+# or
+best clean -a
+best clean --all
+
+# 清空依赖文件
+best clean -d
+best clean --dep
+```
+
 ### 查看帮助
 
 ```bash

@@ -45,6 +45,20 @@ best init test-project --targetPath /d/my/best-cli/commands/init --debug --force
 best init test-project --force --debug
 ```
 
+### 缓存清理
+
+```bash
+# 清空全部
+best clean
+# or
+best clean -a
+best clean --all
+
+# 清空依赖文件
+best clean -d
+best clean --dep
+```
+
 ### 环境变量配置默认请求 URL
 
 ```bash
