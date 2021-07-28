@@ -97,7 +97,7 @@ class InitCommand extends Command {
       isProjectNameValid = true;
       projectInfo.projectName = this.projectName;
     }
-    // 1、选择创建项目或组件
+    // 1、选择创建项目或组件/工具库
     const { type } = await inquirer.prompt({
       type: 'list',
       name: 'type',
@@ -109,7 +109,7 @@ class InitCommand extends Command {
           value: TYPE_PROJECT,
         },
         {
-          name: '组件',
+          name: '组件/工具库',
           value: TYPE_COMPONENT,
         },
       ],
@@ -118,7 +118,7 @@ class InitCommand extends Command {
     this.template = this.template.filter((template) => {
       return template.tag.includes(type);
     });
-    const title = type === TYPE_PROJECT ? '项目' : '组件';
+    const title = type === TYPE_PROJECT ? '项目' : '组件/工具库';
     const projectNamePrompt = {
       type: 'input',
       name: 'projectName',
@@ -180,16 +180,16 @@ class InitCommand extends Command {
         ...project,
       };
     } else if (type === TYPE_COMPONENT) {
-      // 组件基本信息
+      // 组件/工具库基本信息
       const descriptionPrompt = {
         type: 'input',
         name: 'componentDescription',
-        message: '请输入组件信息',
+        message: '请输入组件/工具库的描述信息',
         validate: function (v) {
           var done = this.async();
           setTimeout(function () {
             if (!v) {
-              done('请输入组件描述信息');
+              done('请输入组件/工具库的描述信息');
               return;
             }
             done(null, true);
@@ -197,7 +197,7 @@ class InitCommand extends Command {
         },
       };
       projectPrompt.push(descriptionPrompt);
-      // 2、获取组件基本信息
+      // 2、获取组件/工具库基本信息
       const component = await inquirer.prompt(projectPrompt);
       projectInfo = {
         ...projectInfo,
